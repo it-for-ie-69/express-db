@@ -1,7 +1,7 @@
 {
   "name": "express-intro",
   "version": "1.0.0",
-  "description": "",
+  "description": "Express.js and TypeScript backend starter for students",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
