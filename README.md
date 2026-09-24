@@ -1,50 +1,25 @@
-# Express.js Backend Starter
+## Starter Template
 
-A minimal Express.js and TypeScript backend starter for students. Clone this repository to begin building an API without having to configure the initial server setup.
+https://github.com/it-for-ie-69/express-template
 
-## Included
+## Todo Without DB
 
-- Express 5 with JSON request-body parsing
-- TypeScript configuration
-- Development reloading with Nodemon and `tsx`
-- A sample `GET /` route at `http://localhost:3000`
+https://github.com/it-for-ie-69/express-intro/blob/main/src/index_2.ts
 
-## Getting Started
+## Postgres DB with Docker
 
-Clone the repository, then install its dependencies with pnpm:
+`docker run -d --name my-postgres -e POSTGRES_PASSWORD=1234 -v pgdata:/var/lib/postgresql -p 5432:5432 postgres:latest`
 
-```bash
-git clone <repository-url>
-cd express-template
-pnpm install
+```sql
+CREATE DATABASE app_db;
 ```
 
-Start the development server:
-
-```bash
-pnpm dev
+```sql
+CREATE TABLE IF NOT EXISTS
+  todos (
+    id serial PRIMARY KEY,
+    title VARCHAR(50) NOT NULL,
+    completed BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  );
 ```
-
-Visit `http://localhost:3000` to confirm the server is running. Add routes and application code in `src/index.ts` as you work through the course.
-
-## Production Build
-
-```bash
-pnpm build
-pnpm start
-```
-
-## Use Your Own Repository
-
-After cloning this starter, create a new empty repository in your own GitHub account. Do not initialize it with a README, `.gitignore`, or license.
-
-Replace the template repository remote with your new repository, then push your work:
-
-```bash
-git remote rename origin upstream
-git remote add origin https://github.com/<your-username>/<your-repository>.git
-git branch -M main
-git push -u origin main
-```
-
-Your work will now be pushed to your repository. The original starter remains available as `upstream` if you need to refer back to it.
