@@ -58,21 +58,11 @@ app.delete("/todos/:id", async (req, res) => {
 
 app.patch("/todos/:id", async (req, res) => {
   const todoId = Number(req.params.id);
-
-  const queryTodo = await pool.query("SELECT * from todos WHERE id = $1", [
-    todoId,
-  ]);
-  if (queryTodo.rows.length !== 1) {
-    return res.status(404).json({ error: "Todo not found" });
-  }
-
-  const todo = queryTodo.rows[0];
-  todo.title = req.body.title || todo.title;
-  todo.completed = req.body.completed ?? todo.completed;
-
+  const todoTitle = req.body.title ?? null;
+  const todoCompleted = req.body.completed ?? null;
   const query = await pool.query(
-    "UPDATE todos SET title = $1, completed = $2 WHERE id = $3 RETURNING *;",
-    [todo.title, todo.completed, todo.id],
+    "UPDATE todos SET title = COALESCE($1, title), completed = COALESCE($2, completed) WHERE id = $3 RETURNING *;",
+    [todoTitle, todoCompleted, todoId],
   );
   res.status(200).json(query.rows);
 });
